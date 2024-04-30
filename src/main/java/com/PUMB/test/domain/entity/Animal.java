@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "animal")
@@ -43,4 +44,16 @@ public class Animal implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "sex")
     private Sex sex;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Animal animal)) return false;
+        return Objects.equals(getId(), animal.getId()) && Objects.equals(getName(), animal.getName()) && Objects.equals(getWeight(), animal.getWeight()) && Objects.equals(getCost(), animal.getCost()) && Objects.equals(getCategory(), animal.getCategory()) && getType() == animal.getType() && getSex() == animal.getSex();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getWeight(), getCost(), getCategory(), getType(), getSex());
+    }
 }
